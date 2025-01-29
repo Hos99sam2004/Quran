@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quran_app/Home/Pages/Hadith/cubit/hadith_cubit.dart';
+import 'package:quran_app/Home/Pages/Surah/Surah%20Cubit/surah_cubit_cubit.dart';
 // import 'package:quran_app/Shared/Shared_Components.dart';
 import 'package:quran_app/splash_screen/splash_screen_page.dart';
 
@@ -12,18 +15,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 245, 221, 250),
-          elevation: 0,
-          centerTitle: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SurahCubitCubit()
+            ..GetnameofSurah()
+            ..GetnameofRecitation(),
         ),
-        scaffoldBackgroundColor: Color.fromARGB(255, 245, 221, 250),
-        // colorScheme:
+        BlocProvider(create: (context) => HadithCubit()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromARGB(255, 245, 221, 250),
+            elevation: 0,
+            centerTitle: true,
+          ),
+          scaffoldBackgroundColor: Color.fromARGB(255, 245, 221, 250),
+          // colorScheme:
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreenPage(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreenPage(),
     );
   }
 }

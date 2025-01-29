@@ -45,7 +45,7 @@ class SplashScreenPage extends StatelessWidget {
                         // fit: StackFit.expand,
                         children: [
                           Positioned(
-                            top: h * 0.04,
+                            top: h * 0.09,
                             left: w * 0.1,
                             child: Image.asset(
                               "assets/mosque 1.png",

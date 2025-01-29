@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quran_app/Home/Pages/Hadith.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quran_app/Home/Pages/Hadith/Hadith.dart';
 import 'package:quran_app/Home/Pages/Hizb.dart';
 import 'package:quran_app/Home/Pages/Juz.dart';
-import 'package:quran_app/Home/Pages/Surah.dart';
+import 'package:quran_app/Home/Pages/Surah/Surah%20Cubit/surah_cubit_cubit.dart';
+import 'package:quran_app/Home/Pages/Surah/surah_details/Surah.dart';
+import 'package:quran_app/Home/home_app/IconWidget/quran/quran_page.dart';
 import 'package:quran_app/Shared/Shared_Components.dart';
 
 class HomeAppPage extends StatefulWidget {
@@ -16,14 +19,15 @@ class HomeAppPage extends StatefulWidget {
 class _HomeAppPageState extends State<HomeAppPage> {
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<SurahCubitCubit>();
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     print(
       "$h and $w",
     );
     return DefaultTabController(
-      length: 4,
-      initialIndex: 1,
+      length: 2,
+      initialIndex: 0,
       child: Scaffold(
           appBar: AppBar(
             titleTextStyle: TextStyle(
@@ -51,9 +55,9 @@ class _HomeAppPageState extends State<HomeAppPage> {
               ),
             ],
           ),
-          drawer: Drawer(
-            backgroundColor: IconColor,
-          ),
+          // drawer: Drawer(
+          //   backgroundColor: IconColor,
+          // ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -108,7 +112,7 @@ class _HomeAppPageState extends State<HomeAppPage> {
                               ]),
                               SizedBox(height: 15),
                               Text(
-                                "Al - Fatiah",
+                                "${cubit.surahname.chapters?[0].nameArabic}",
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: DarkPurple,
@@ -160,29 +164,29 @@ class _HomeAppPageState extends State<HomeAppPage> {
                           "Surah",
                         ),
                       ),
-                      Tab(
-                        child: Text(
-                          "Juz",
-                        ),
-                      ),
+                      // Tab(
+                      //   child: Text(
+                      //     "Juz",
+                      //   ),
+                      // ),
                       Tab(
                         child: Text(
                           "Hadith",
                         ),
                       ),
-                      Tab(
-                        child: Text(
-                          "Hizb",
-                        ),
-                      ),
+                      // Tab(
+                      //   child: Text(
+                      //     "Hizb",
+                      //   ),
+                      // ),
                     ]),
                 SizedBox(
                   height: h * 0.44,
                   child: TabBarView(children: [
                     Surah(),
-                    Juz(),
+                    // Juz(),
                     Hadith(),
-                    Hizb(),
+                    // Hizb(),
                   ]),
                 ),
                 SizedBox(height: 4),
@@ -204,7 +208,9 @@ class _HomeAppPageState extends State<HomeAppPage> {
                                 child: Image.asset("assets/vec.png"))),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          await goto(context, QuranPages());
+                        },
                         child: Container(
                             width: 90,
                             height: 90,
